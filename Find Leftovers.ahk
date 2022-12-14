@@ -1,3 +1,9 @@
+﻿;@Ahk2Exe-Obey U_bits, = %A_PtrSize% * 8
+;@Ahk2Exe-Obey U_type, = "%A_IsUnicode%" ? "Unicode" : "ANSI"
+;@Ahk2Exe-ExeName %A_ScriptName~\.[^\.]+$%_%U_type%_%U_bits%
+
+;@Ahk2Exe-SetMainIcon shell32_33.ico
+
 program_files := EnvGet("PROGRAMFILES")
 program_files_86 := EnvGet("PROGRAMFILES(X86)")
 user_profile := EnvGet("USERPROFILE")
