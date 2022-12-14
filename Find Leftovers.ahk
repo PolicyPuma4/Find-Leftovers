@@ -1,4 +1,7 @@
-﻿;@Ahk2Exe-Obey U_bits, = %A_PtrSize% * 8
+﻿; Created by https://github.com/PolicyPuma4
+; Repository https://github.com/PolicyPuma4/Find-Leftovers
+
+;@Ahk2Exe-Obey U_bits, = %A_PtrSize% * 8
 ;@Ahk2Exe-Obey U_type, = "%A_IsUnicode%" ? "Unicode" : "ANSI"
 ;@Ahk2Exe-ExeName %A_ScriptName~\.[^\.]+$%_%U_type%_%U_bits%
 
