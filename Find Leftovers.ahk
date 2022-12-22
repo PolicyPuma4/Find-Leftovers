@@ -1,4 +1,4 @@
-﻿; Created by https://github.com/PolicyPuma4
+; Created by https://github.com/PolicyPuma4
 ; Repository https://github.com/PolicyPuma4/Find-Leftovers
 
 #Requires AutoHotkey v2.0-beta
@@ -32,9 +32,9 @@ keys := [
     "HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node",
 ]
 
-input := InputBox().value
+input := InputBox().Value
 if not input
-    ExitApp
+    ExitApp()
 
 for leftover_dir in dirs
 {
@@ -47,7 +47,7 @@ for leftover_dir in dirs
 
         if result = "Yes"
         {
-            Run "explorer.exe /select,`"" A_LoopFileFullPath "`""
+            Run("explorer.exe /select,`"" A_LoopFileFullPath "`"")
             continue
         }
 
@@ -55,7 +55,7 @@ for leftover_dir in dirs
             continue
 
         if result = "Cancel"
-            ExitApp
+            ExitApp()
     }
 }
 
@@ -71,10 +71,10 @@ for leftover_key in keys
 
         if result = "Yes"
         {
-            RegWrite path, "REG_SZ", "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Applets\Regedit", "LastKey"
+            RegWrite(path, "REG_SZ", "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Applets\Regedit", "LastKey")
             try
             {
-                Run "regedit.exe /m"
+                Run("regedit.exe /m")
             }
             catch as e
             {
@@ -88,8 +88,8 @@ for leftover_key in keys
             continue
 
         if result = "Cancel"
-            ExitApp
+            ExitApp()
     }
 }
 
-MsgBox "No more results 👍"
+MsgBox("No more results 👍")
