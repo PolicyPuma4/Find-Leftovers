@@ -10,27 +10,21 @@
 
 ;@Ahk2Exe-SetMainIcon shell32_33.ico
 
-;@Ahk2Exe-UpdateManifest 2
-
 if not A_IsCompiled
-{
     TraySetIcon("shell32_33.ico")
 
-    arg := A_Args.Length ? A_Args[1] : ""
-    if not A_IsAdmin and not arg = "restart"
+arg := A_Args.Length ? A_Args[1] : ""
+if not A_IsAdmin and not arg = "restart"
+{
+    try
     {
-        try
-        {
-            Run("*RunAs `"" A_ScriptFullPath "`" restart")
-            ExitApp()
-        }
-        catch as e
-        {
-            if not e.Extra = "The operation was canceled by the user.`r`n"
-            {
-                throw e
-            }
-        }
+        Run("*RunAs `"" A_ScriptFullPath "`" restart")
+        ExitApp()
+    }
+    catch as e
+    {
+        if not e.Extra = "The operation was canceled by the user.`r`n"
+            throw e
     }
 }
 
@@ -76,18 +70,14 @@ SearchEditChange(*)
     reg_listbox.Delete()
     input := search_edit.Value
     if not input
-    {
         return
-    }
 
     for leftover_dir in dirs
     {
         Loop Files, leftover_dir "\*", "DF"
         {
             if not InStr(A_LoopFileName, input)
-            {
                 continue
-            }
 
             path_listbox.Add([A_LoopFileFullPath])
         }
@@ -98,9 +88,7 @@ SearchEditChange(*)
         Loop Reg, leftover_key, "K"
         {
             if not InStr(A_LoopRegName, input)
-            {
                 continue
-            }
 
             reg_listbox.Add([leftover_key "\" A_LoopRegName])
         }
@@ -111,9 +99,7 @@ DeleteButtonClick(*)
 {
     confirm := MsgBox("Are you sure?", "Find Leftovers", "YesNo Owner" my_gui.Hwnd)
     if not confirm = "Yes"
-    {
         return
-    }
 
     failed := Array()
 
@@ -135,9 +121,7 @@ DeleteButtonClick(*)
             catch as e
             {
                 if not e.Message = "Failed"
-                {
                     throw e
-                }
 
                 failed.Push(path)
             }
@@ -156,9 +140,7 @@ DeleteButtonClick(*)
             catch as e
             {
                 if not e.Message = "(5) Access is denied."
-                {
                     throw e
-                }
 
                 failed.Push(key)
             }
@@ -173,9 +155,7 @@ DeleteButtonClick(*)
             message := message fail
 
             if not A_Index = failed.Length
-            {
                 message := message "`n"
-            }
         }
 
         MsgBox(message, "Find Leftovers", "Owner" my_gui.Hwnd)
