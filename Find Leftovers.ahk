@@ -122,45 +122,44 @@ SearchEditChange(*) {
 }
 
 DeleteButtonClick(*) {
+    paths := path_listbox.Text ? path_listbox.Text : Array()
+    keys := reg_listbox.Text ? reg_listbox.Text : Array()
+    if not paths.Length and not keys.Length {
+        return
+    }
+
     confirm := MsgBox("Are you sure?", "Find Leftovers", "YesNo Owner" my_gui.Hwnd)
     if not confirm = "Yes" {
         return
     }
 
     failed := Array()
-
-    paths := path_listbox.Text
-    if paths {
-        for path in paths {
-            try {
-                if InStr(FileExist(path), "D") {
-                    DirDelete(path, true)
-                    continue
-                }
-        
-                FileDelete(path)
-            } catch as e {
-                if not e.Message = "Failed" {
-                    throw e
-                }
-
-                failed.Push(path)
+    for path in paths {
+        try {
+            if InStr(FileExist(path), "D") {
+                DirDelete(path, true)
+                continue
             }
+    
+            FileDelete(path)
+        } catch as e {
+            if not e.Message = "Failed" {
+                throw e
+            }
+
+            failed.Push(path)
         }
     }
 
-    keys := reg_listbox.Text
-    if keys {
-        for key in keys {
-            try {
-                RegDeleteKey(key)
-            } catch as e {
-                if not e.Message = "(5) Access is denied." {
-                    throw e
-                }
-
-                failed.Push(key)
+    for key in keys {
+        try {
+            RegDeleteKey(key)
+        } catch as e {
+            if not e.Message = "(5) Access is denied." {
+                throw e
             }
+
+            failed.Push(key)
         }
     }
 
