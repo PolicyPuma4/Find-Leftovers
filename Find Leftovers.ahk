@@ -74,7 +74,7 @@ GuiSize(GuiObj, MinMax, Width, Height) {
 
     margin_y := 5
     available_space := Height - all_control_height - (controls.Length + 1) * margin_y
-    for control in my_gui {
+    for control in controls {
         y := 0
         h := 0
         if A_Index > 1 {
@@ -85,9 +85,7 @@ GuiSize(GuiObj, MinMax, Width, Height) {
         weight := control.Type = "ListBox" ? 0.5 : 0
         control.Move(, y + h + margin_y, Width - my_gui.MarginX * 2, control_height + available_space * weight)
         control.GetPos(,,, &control_height)
-    }
 
-    for control in my_gui {
         control.Redraw()
     }
 }
