@@ -65,27 +65,23 @@ keys := [
 
 GuiSize(GuiObj, MinMax, Width, Height) {
     all_control_height := 0
-    controls := Array()
+    control_count := 0
     for control in my_gui {
         control.getPos(,,, &control_height)
         all_control_height += control_height
-        controls.Push(control)
+        control_count++
     }
 
     margin_y := 5
-    available_space := Height - all_control_height - (controls.Length + 1) * margin_y
-    for control in controls {
-        y := 0
-        h := 0
-        if A_Index > 1 {
-            controls[A_Index - 1].GetPos(, &y,, &h)
-        }
-
+    available_space := Height - all_control_height - (control_count + 1) * margin_y
+    previous_y := 0
+    previous_h := 0
+    for control in my_gui {
         control.GetPos(,,, &control_height)
         weight := control.Type = "ListBox" ? 0.5 : 0
-        control.Move(, y + h + margin_y, Width - my_gui.MarginX * 2, control_height + available_space * weight)
-        control.GetPos(,,, &control_height)
+        control.Move(, previous_y + previous_h + margin_y, Width - my_gui.MarginX * 2, control_height + available_space * weight)
 
+        control.GetPos(, &previous_y,, &previous_h)
         control.Redraw()
     }
 }
